@@ -17,6 +17,7 @@ from os import listdir
 
 def classify0(inX, dataSet, labels, k):
     dataSetSize = dataSet.shape[0]
+
     diffMat = tile(inX, (dataSetSize,1)) - dataSet
     sqDiffMat = diffMat**2
     sqDistances = sqDiffMat.sum(axis=1)
@@ -26,11 +27,6 @@ def classify0(inX, dataSet, labels, k):
     for i in range(k):
         voteIlabel = labels[sortedDistIndicies[i]]
         classCount[voteIlabel] = classCount.get(voteIlabel,0) + 1
-        
-        #if classCount.has_key(voteIlabel):
-        #    classCount[voteIlabel] += 1
-        #else:
-        #    classCount[voteIlabel] = 1
     sortedClassCount = sorted(classCount.iteritems(), key=operator.itemgetter(1), reverse=True)
     return sortedClassCount[0][0]
 
@@ -51,6 +47,7 @@ def file2matrix(filename):
         listFromLine = line.split('\t')
         returnMat[index,:] = listFromLine[0:3]
         classLabelVector.append(int(listFromLine[-1]))
+        #classLabelVector.append(listFromLine[-1])
         index += 1
     return returnMat,classLabelVector
     
